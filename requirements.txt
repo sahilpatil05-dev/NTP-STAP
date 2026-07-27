@@ -8,7 +8,7 @@ Flask-SocketIO==5.5.1
 
 # ── SocketIO Transport ──────────────────────────────────────────
 python-socketio>=5.12.0
-python-engineio==4.9.0
+python-engineio>=4.11.0
 
 # ── Production WSGI/ASGI Server (for Render deployment) ──────────
 # ✅ BUG-026 FIX: Production server for Flask-SocketIO
