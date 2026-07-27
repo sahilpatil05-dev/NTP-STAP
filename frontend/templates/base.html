@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="NTP Secure Communication & Threat Analysis Platform — A real-time cybersecurity research tool for NTP protocol analysis, covert channel detection, and defensive monitoring.">
+    <meta name="author" content="NTP-SCTAP Research Team">
+    <title>{% block title %}NTP-SCTAP{% endblock %}</title>
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <!-- Chart.js CDN -->
+    <script
+        defer
+        src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js">
+    </script>
+
+    <!-- Socket.IO Client -->
+    <script
+        defer
+        src="{{ url_for('static', filename='js/socket.io.min.js') }}">
+    </script>
+
+    <!-- Application Stylesheet -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+
+    {% block head %}{% endblock %}
+</head>
+<body>
+    <!-- Navigation Sidebar -->
+    <nav id="sidebar" class="sidebar">
+        <div class="sidebar-header">
+            <div class="logo">
+                <span class="logo-icon">◈</span>
+                <span class="logo-text">NTP-SCTAP</span>
+            </div>
+            <span class="version-badge">v{{ config.APP_VERSION }}</span>
+        </div>
+
+        <ul class="nav-links">
+            <li><a href="#" class="nav-link active" id="nav-dashboard" data-page="dashboard">
+                <span class="nav-icon">⌂</span> Dashboard
+            </a></li>
+            <li><a href="#" class="nav-link" id="nav-packets" data-page="packets">
+                <span class="nav-icon">◉</span> Packet Monitor
+            </a></li>
+            <li><a href="#" class="nav-link" id="nav-messages" data-page="messages">
+                <span class="nav-icon">✉</span> Messages
+            </a></li>
+            <li><a href="#" class="nav-link" id="nav-threats" data-page="threats">
+                <span class="nav-icon">⚠</span> Threat Detection
+            </a></li>
+            <li><a href="#" class="nav-link" id="nav-analytics" data-page="analytics">
+                <span class="nav-icon">◫</span> Analytics
+            </a></li>
+            <li><a href="#" class="nav-link" id="nav-sessions" data-page="sessions">
+                <span class="nav-icon">⇄</span> Sessions
+            </a></li>
+            <li><a href="#" class="nav-link" id="nav-logs" data-page="logs">
+                <span class="nav-icon">▤</span> System Logs
+            </a></li>
+        </ul>
+
+        <div class="sidebar-footer">
+            <div class="system-indicator">
+                <span class="status-dot online" id="system-status-dot"></span>
+                <span class="status-text" id="system-status-text">System Online</span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content Area -->
+    <main id="main-content" class="main-content">
+        <header class="topbar">
+            <div class="topbar-left">
+                <button class="sidebar-toggle" id="sidebar-toggle" aria-label="Toggle sidebar">☰</button>
+                <h1 class="page-title" id="page-title">Dashboard</h1>
+            </div>
+            <div class="topbar-right">
+                <div class="topbar-indicator" id="topbar-connection">
+                    <span class="status-dot online"></span>
+                    <span>Connected</span>
+                </div>
+                <div class="topbar-clock" id="topbar-clock"></div>
+            </div>
+        </header>
+
+        <section class="content-area" id="content-area">
+            {% block content %}{% endblock %}
+        </section>
+    </main>
+
+    <!-- Core Scripts -->
+    <script
+        defer
+        src="{{ url_for('static', filename='js/main.js') }}">
+    </script>
+    {% block scripts %}{% endblock %}
+</body>
+</html>

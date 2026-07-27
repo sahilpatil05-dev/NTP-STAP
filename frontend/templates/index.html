@@ -1,0 +1,800 @@
+```html
+{% extends "base.html" %}
+
+{% block title %}NTP-SCTAP — Professional Cybersecurity Research Dashboard{% endblock %}
+{% block page_title %}Dashboard{% endblock %}
+
+{% block content %}
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- Dashboard Page (default view)                                  -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<div id="page-dashboard" class="page-view active">
+<div class="dashboard-grid">
+
+    <!-- Hero Card -->
+    <div class="card card-hero" id="hero-card">
+        <div class="card-glow"></div>
+        <h2 class="hero-title">NTP Secure Communication &<br>Threat Analysis Platform</h2>
+        <p class="hero-subtitle">Educational platform for NTP protocol analysis, covert channel detection, cryptographic protection, and defensive threat intelligence monitoring.</p>
+        <div class="hero-badges">
+            <span class="badge badge-cyan">NTP Protocol</span>
+            <span class="badge badge-green">AES-256-GCM</span>
+            <span class="badge badge-amber">Threat Detection</span>
+            <span class="badge badge-purple">Real-Time Analytics</span>
+        </div>
+    </div>
+
+    <!-- Quick Stats Row -->
+    <div class="card stat-card" id="stat-packets-sent">
+        <div class="stat-icon cyan">▲</div>
+        <div class="stat-body">
+            <span class="stat-value" id="val-packets-sent">0</span>
+            <span class="stat-label">Packets Sent</span>
+        </div>
+    </div>
+
+    <div class="card stat-card" id="stat-packets-received">
+        <div class="stat-icon green">▼</div>
+        <div class="stat-body">
+            <span class="stat-value" id="val-packets-received">0</span>
+            <span class="stat-label">Packets Received</span>
+        </div>
+    </div>
+
+    <div class="card stat-card" id="stat-threats">
+        <div class="stat-icon amber">⚠</div>
+        <div class="stat-body">
+            <span class="stat-value" id="val-threats">0</span>
+            <span class="stat-label">Threats Detected</span>
+        </div>
+    </div>
+
+    <div class="card stat-card" id="stat-uptime">
+        <div class="stat-icon purple">◈</div>
+        <div class="stat-body">
+            <span class="stat-value" id="val-uptime">Online</span>
+            <span class="stat-label">System Status</span>
+        </div>
+    </div>
+
+    <!-- System Monitoring Panel -->
+    <div class="card card-wide" id="system-health-card">
+        <div class="card-header">
+            <h3>System Monitor & Hardware Resources</h3>
+            <span class="badge badge-green" id="health-badge">Healthy</span>
+        </div>
+        <div class="health-grid">
+            <div class="health-item">
+                <span class="health-label">CPU Utilization</span>
+                <span class="health-value online" id="monitor-cpu">0.0%</span>
+            </div>
+            <div class="health-item">
+                <span class="health-label">Memory Usage</span>
+                <span class="health-value online" id="monitor-ram">0.0%</span>
+            </div>
+            <div class="health-item">
+                <span class="health-label">Database Status</span>
+                <span class="health-value online" id="monitor-db">Healthy</span>
+            </div>
+            <div class="health-item">
+                <span class="health-label">Database Size</span>
+                <span class="health-value info" id="monitor-db-size">0 KB</span>
+            </div>
+            <div class="health-item">
+                <span class="health-label">Throughput Rate</span>
+                <span class="health-value online" id="monitor-pps">0.00 PPS</span>
+            </div>
+            <div class="health-item">
+                <span class="health-label">Crypto Status</span>
+                <span class="health-value online" id="monitor-crypto">AES-256-GCM</span>
+            </div>
+            <div class="health-item">
+                <span class="health-label">Receiver Status</span>
+                <span class="health-value online" id="monitor-receiver">Listening</span>
+            </div>
+            <div class="health-item">
+                <span class="health-label">Active Sockets</span>
+                <span class="health-value info" id="monitor-sockets">2 Active</span>
+            </div>
+            <div class="health-item">
+                <span class="health-label">Connected Clients</span>
+                <span class="health-value pending" id="monitor-clients">0 Clients</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Covert Message Transmitter Widget -->
+    <div class="card" id="transmitter-card">
+        <div class="card-header">
+            <h3>Covert Message Transmitter</h3>
+        </div>
+        <form id="transmitter-form" class="form-layout">
+            <div class="form-group-col">
+                <label for="tx-message">Plaintext Message</label>
+                <input 
+                    type="text" 
+                    id="tx-message" 
+                    placeholder="Type secret message here..." 
+                    required 
+                    autocomplete="off"
+                    maxlength="4096">
+            </div>
+            <div class="form-group-row">
+
+                <div class="form-group-col">
+                    <label for="tx-host">Destination IP</label>
+                    <input
+                        type="text"
+                        id="tx-host"
+                        value="127.0.0.1"
+                        placeholder="127.0.0.1"
+                        autocomplete="off"
+                        spellcheck="false"
+                        required>
+                </div>
+
+                <div class="form-group-col">
+                    <label for="tx-password">AES Password</label>
+                    <input
+                        type="password"
+                        id="tx-password"
+                        placeholder="Enter password"
+                        autocomplete="new-password"
+                        required>
+                </div>
+
+                <div class="form-group-col">
+                    <label for="tx-port">Destination Port</label>
+                    <input
+                        type="number"
+                        id="tx-port"
+                        value="9124"
+                        min="1"
+                        max="65535"
+                        required>
+                </div>
+
+            </div>
+            <button type="submit" class="btn btn-cyan btn-full">Transmit Covert Packet</button>
+        </form>
+    </div>
+
+    <!-- Recent Activity Console -->
+    <div class="card card-wide" id="activity-card">
+        <div class="card-header">
+            <h3>Recent Network Activity Console</h3>
+            <span class="badge badge-cyan" id="activity-count">0 events</span>
+        </div>
+        <div class="console-panel" id="activity-console">
+            <div class="console-line">
+                <span class="console-time" id="boot-time"></span>
+                <span class="console-tag info">INFO</span>
+                <span class="console-msg">Real-Time WebSocket activity console initialized.</span>
+            </div>
+        </div>
+        <button class="btn btn-small" id="clear-console-btn" style="margin-top: 10px;">Clear Console</button>
+    </div>
+
+    <!-- Mini Chart: Traffic Overview -->
+    <div class="card card-wide" id="traffic-chart-card">
+        <div class="card-header">
+            <h3>Traffic Data Distribution</h3>
+        </div>
+        <div class="chart-container">
+            <canvas id="traffic-chart"></canvas>
+        </div>
+    </div>
+
+</div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- Packet Monitor Page (with Packet Inspector & Learning Mode)   -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<div id="page-packets" class="page-view">
+<div class="page-header-row">
+    <h2>Packet Monitor & Inspector</h2>
+    <div class="filter-group">
+        <select id="pkt-filter-direction" class="filter-select">
+            <option value="">All Directions</option>
+            <option value="sent">Sent</option>
+            <option value="received">Received</option>
+        </select>
+        <button class="btn btn-cyan" id="pkt-refresh-btn">Refresh</button>
+    </div>
+</div>
+
+<div class="split-layout">
+    <!-- Packets List Column -->
+    <div class="card split-left-card">
+        <div class="table-wrapper">
+            <table class="data-table data-table-hoverable" id="packets-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Dir</th>
+                        <th>Source</th>
+                        <th>Destination</th>
+                        <th>Size</th>
+                        <th>Payload</th>
+                        <th>Encryption</th>
+                        <th>Validation</th>
+                    </tr>
+                </thead>
+                <tbody id="packets-tbody">
+                    <tr><td colspan="8" class="table-empty">Loading packets…</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Packet Inspector & Protocol Learning Panel -->
+    <div class="card split-right-card" id="packet-inspector-panel">
+        <div class="inspector-placeholder" id="inspector-placeholder">
+            <div class="placeholder-icon">◈</div>
+            <h4>Packet Inspector</h4>
+            <p>Click any packet row in the table to inspect raw bytes, analyze fields, view timelines, and explore protocol descriptions.</p>
+        </div>
+        
+        <div class="inspector-content hidden" id="inspector-content">
+            <div class="inspector-header">
+                <span class="badge" id="ins-direction-badge">SENT</span>
+                <h3 id="ins-title">Packet Inspection</h3>
+            </div>
+            
+            <!-- Packet timeline stages visualization -->
+            <div class="inspector-section">
+                <h4>Chronological Lifecycle Timeline</h4>
+                <div class="timeline-visual" id="ins-timeline-container">
+                    <!-- Dynamic timeline boxes -->
+                </div>
+            </div>
+
+            <!-- Tabs inside inspector -->
+            <div class="inspector-tabs">
+                <button class="ins-tab-btn active" id="btn-tab-fields">NTP Fields</button>
+                <button class="ins-tab-btn" id="btn-tab-hex">Raw Hex Dump</button>
+                <button class="ins-tab-btn" id="btn-tab-learn">Learning Mode</button>
+            </div>
+
+            <!-- Tab Content: NTP Fields -->
+            <div class="ins-tab-content active" id="tab-fields-content">
+                <div class="fields-grid">
+                    <div class="field-box" data-field="leap">
+                        <span class="field-lbl">Leap Indicator (LI)</span>
+                        <span class="field-val" id="ins-f-leap">—</span>
+                    </div>
+                    <div class="field-box" data-field="version">
+                        <span class="field-lbl">Version Number (VN)</span>
+                        <span class="field-val" id="ins-f-version">—</span>
+                    </div>
+                    <div class="field-box" data-field="mode">
+                        <span class="field-lbl">NTP Mode</span>
+                        <span class="field-val" id="ins-f-mode">—</span>
+                    </div>
+                    <div class="field-box" data-field="stratum">
+                        <span class="field-lbl">Stratum</span>
+                        <span class="field-val" id="ins-f-stratum">—</span>
+                    </div>
+                    <div class="field-box" data-field="poll">
+                        <span class="field-lbl">Poll Interval</span>
+                        <span class="field-val" id="ins-f-poll">—</span>
+                    </div>
+                    <div class="field-box" data-field="precision">
+                        <span class="field-lbl">Precision</span>
+                        <span class="field-val" id="ins-f-precision">—</span>
+                    </div>
+                    <div class="field-box" data-field="ref_id">
+                        <span class="field-lbl">Reference Source ID</span>
+                        <span class="field-val" id="ins-f-ref-id">—</span>
+                    </div>
+                    <div class="field-box" data-field="ref_timestamp">
+                        <span class="field-lbl">Reference Timestamp</span>
+                        <span class="field-val" id="ins-f-ref-time">—</span>
+                    </div>
+                    <div class="field-box" data-field="origin_timestamp">
+                        <span class="field-lbl">Origin Timestamp</span>
+                        <span class="field-val" id="ins-f-origin-time">—</span>
+                    </div>
+                    <div class="field-box" data-field="recv_timestamp">
+                        <span class="field-lbl">Receive Timestamp</span>
+                        <span class="field-val" id="ins-f-recv-time">—</span>
+                    </div>
+                    <div class="field-box" data-field="tx_timestamp">
+                        <span class="field-lbl">Transmit Timestamp</span>
+                        <span class="field-val" id="ins-f-tx-time">—</span>
+                    </div>
+                    <div class="field-box" data-field="extension">
+                        <span class="field-lbl">Extension Fields size</span>
+                        <span class="field-val" id="ins-f-ext-len">—</span>
+                    </div>
+                </div>
+                
+                <div class="payload-inspector-box" id="ins-covert-box">
+                    <h5>Covert Channel Recovered Data</h5>
+                    <div class="covert-status-line">
+                        <span>Payload Status: <strong id="ins-c-status">none</strong></span>
+                        <span>Encryption: <strong id="ins-c-crypto">none</strong></span>
+                    </div>
+                    <div class="covert-text-container" id="ins-c-payload">—</div>
+                </div>
+            </div>
+
+            <!-- Tab Content: Hex Dump -->
+            <div class="ins-tab-content" id="tab-hex-content">
+                <pre class="hex-dump-panel" id="ins-hex-dump"></pre>
+            </div>
+
+            <!-- Tab Content: Learning Mode -->
+            <div class="ins-tab-content" id="tab-learn-content">
+                <div class="learning-panel">
+                    <div class="learning-instruction">Click any of the NTP fields in the <strong>NTP Fields</strong> tab to see their structural definitions, normal ranges, and security implications here.</div>
+                    <div class="learning-card hidden" id="learn-card">
+                        <h4 id="learn-field-title">Leap Indicator</h4>
+                        <div class="learn-desc-item">
+                            <h5>Purpose</h5>
+                            <p id="learn-field-purpose"></p>
+                        </div>
+                        <div class="learn-desc-item">
+                            <h5>Normal Values</h5>
+                            <p id="learn-field-normal"></p>
+                        </div>
+                        <div class="learn-desc-item">
+                            <h5>Security Relevance & Covert Risks</h5>
+                            <p id="learn-field-security"></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- Messages Page                                                  -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<div id="page-messages" class="page-view">
+<div class="page-header-row">
+    <h2>Covert Messages Log</h2>
+    <div class="filter-group">
+        <select id="msg-filter-direction" class="filter-select">
+            <option value="">All</option>
+            <option value="sent">Sent</option>
+            <option value="received">Received</option>
+        </select>
+        <button class="btn btn-cyan" id="msg-refresh-btn">Refresh</button>
+    </div>
+</div>
+<div class="card">
+    <div class="table-wrapper">
+        <table class="data-table" id="messages-table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Direction</th>
+                    <th>Plaintext Message Content</th>
+                    <th>Status</th>
+                    <th>Session ID</th>
+                    <th>Timestamp</th>
+                </tr>
+            </thead>
+            <tbody id="messages-tbody">
+                <tr><td colspan="6" class="table-empty">Loading messages…</td></tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- Threat Detection Page (Threat Intel & Analytics)               -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<div id="page-threats" class="page-view">
+<div class="page-header-row">
+    <h2>Threat Detection Center</h2>
+    <button class="btn btn-amber" id="threats-refresh-btn">Refresh</button>
+</div>
+
+<!-- Threat Summary Cards -->
+<div class="threat-summary-row">
+    <div class="card stat-card stat-card-mini">
+        <div class="stat-icon red">!</div>
+        <div class="stat-body">
+            <span class="stat-value" id="val-threat-critical">0</span>
+            <span class="stat-label">Critical Alerts</span>
+        </div>
+    </div>
+    <div class="card stat-card stat-card-mini">
+        <div class="stat-icon amber">!</div>
+        <div class="stat-body">
+            <span class="stat-value" id="val-threat-high">0</span>
+            <span class="stat-label">High Alerts</span>
+        </div>
+    </div>
+    <div class="card stat-card stat-card-mini">
+        <div class="stat-icon purple">!</div>
+        <div class="stat-body">
+            <span class="stat-value" id="val-threat-medium">0</span>
+            <span class="stat-label">Medium Alerts</span>
+        </div>
+    </div>
+    <div class="card stat-card stat-card-mini">
+        <div class="stat-icon cyan">i</div>
+        <div class="stat-body">
+            <span class="stat-value" id="val-threat-low">0</span>
+            <span class="stat-label">Low Alerts</span>
+        </div>
+    </div>
+</div>
+
+<div class="split-layout">
+    <!-- Left: Threat Table -->
+    <div class="card split-left-card">
+        <div class="table-wrapper">
+            <table class="data-table data-table-hoverable" id="threats-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Level</th>
+                        <th>Severity</th>
+                        <th>Confidence</th>
+                        <th>Alert Reason</th>
+                        <th>Detected At</th>
+                    </tr>
+                </thead>
+                <tbody id="threats-tbody">
+                    <tr><td colspan="6" class="table-empty">No threats detected yet.</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Right: Threat Intelligence Analysis Panel -->
+    <div class="card split-right-card" id="threat-intelligence-panel">
+        <div class="inspector-placeholder" id="threat-placeholder">
+            <div class="placeholder-icon warning-text">⚠</div>
+            <h4>Threat Intelligence Analysis</h4>
+            <p>Click any alert row on the left to drill down into threat categories, evidence, affected packet fields, and mitigation recommendations.</p>
+        </div>
+        
+        <div class="inspector-content hidden" id="threat-content">
+            <div class="inspector-header">
+                <span class="badge" id="threat-lbl-level">CRITICAL</span>
+                <h3 id="threat-title-category">Covert Channel Leakage</h3>
+            </div>
+            
+            <div class="threat-intel-box">
+                <div class="intel-metric-row">
+                    <div class="intel-metric">
+                        <span class="intel-lbl">Severity</span>
+                        <span class="intel-val text-red" id="threat-intel-severity">—</span>
+                    </div>
+                    <div class="intel-metric">
+                        <span class="intel-lbl">Confidence</span>
+                        <span class="intel-val" id="threat-intel-confidence">0%</span>
+                    </div>
+                </div>
+
+                <div class="intel-desc-block">
+                    <h5>Reason For Alert</h5>
+                    <p id="threat-intel-reason">—</p>
+                </div>
+
+                <div class="intel-desc-block">
+                    <h5>Evidence & Forensic Indicators</h5>
+                    <p class="evidence-box" id="threat-intel-evidence">—</p>
+                </div>
+
+                <div class="intel-desc-block">
+                    <h5>Affected Fields</h5>
+                    <div class="badge-field-list" id="threat-intel-fields">
+                        <!-- Badges list -->
+                    </div>
+                </div>
+
+                <div class="intel-desc-block">
+                    <h5>Mitigation Recommendation</h5>
+                    <p id="threat-intel-recommendation">—</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="analytics-grid" style="margin-top: 20px;">
+    <!-- Threat Timeline Snapshot -->
+    <div class="card card-wide">
+        <div class="card-header">
+            <h3>Threat Frequencies & Detection Rate Trends</h3>
+        </div>
+        <div class="chart-container">
+            <canvas id="threat-trend-chart"></canvas>
+        </div>
+    </div>
+</div>
+
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- Advanced Analytics Page                                        -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<div id="page-analytics" class="page-view">
+<div class="page-header-row">
+    <h2>Advanced Metrics & Threat Analytics</h2>
+    <button class="btn btn-cyan" id="analytics-refresh-btn">Refresh</button>
+</div>
+
+<div class="analytics-grid">
+    <!-- Stat Indicators -->
+    <div class="card stat-card">
+        <div class="stat-icon cyan">↝</div>
+        <div class="stat-body">
+            <span class="stat-value" id="an-pps-sent">0.00 PPS</span>
+            <span class="stat-label">Outbound Throughput</span>
+        </div>
+    </div>
+    <div class="card stat-card">
+        <div class="stat-icon green">↜</div>
+        <div class="stat-body">
+            <span class="stat-value" id="an-pps-recv">0.00 PPS</span>
+            <span class="stat-label">Inbound Throughput</span>
+        </div>
+    </div>
+    <div class="card stat-card">
+        <div class="stat-icon purple">⇄</div>
+        <div class="stat-body">
+            <span class="stat-value" id="an-latency">0.0 ms</span>
+            <span class="stat-label">Average Latency</span>
+        </div>
+    </div>
+    <div class="card stat-card">
+        <div class="stat-icon amber">⌬</div>
+        <div class="stat-body">
+            <span class="stat-value" id="an-threat-freq">0.0%</span>
+            <span class="stat-label">Threat/Packet Ratio</span>
+        </div>
+    </div>
+
+    <!-- Charts -->
+    <div class="card card-wide">
+        <div class="card-header"><h3>Outbound & Inbound Data Rate (Bytes/Sec)</h3></div>
+        <div class="chart-container">
+            <canvas id="rate-bandwidth-chart"></canvas>
+        </div>
+    </div>
+    
+    <div class="card card-wide">
+        <div class="card-header"><h3>Decryption Success Rate</h3></div>
+        <div class="chart-container">
+            <canvas id="decrypt-chart"></canvas>
+        </div>
+    </div>
+    
+    <div class="card">
+        <div class="card-header"><h3>Protocol Content Usage</h3></div>
+        <div class="chart-container">
+            <canvas id="usage-distribution-chart"></canvas>
+        </div>
+    </div>
+
+    <div class="card">
+        <div class="card-header"><h3>Cryptographic Engine Statistics</h3></div>
+        <div class="chart-container">
+            <canvas id="crypto-stats-chart"></canvas>
+        </div>
+    </div>
+</div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- Sessions Page (with Session Replay)                            -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<div id="page-sessions" class="page-view">
+<div class="page-header-row">
+    <h2>Communication Sessions & Replays</h2>
+    <button class="btn btn-cyan" id="sessions-refresh-btn">Refresh</button>
+</div>
+
+<div class="split-layout">
+    <!-- Sessions Table List -->
+    <div class="card split-left-card">
+        <div class="table-wrapper">
+            <table class="data-table data-table-hoverable" id="sessions-table">
+                <thead>
+                    <tr>
+                        <th>Session ID</th>
+                        <th>Status</th>
+                        <th>Sender</th>
+                        <th>Receiver</th>
+                        <th>Sent</th>
+                        <th>Recv</th>
+                        <th>Started</th>
+                    </tr>
+                </thead>
+                <tbody id="sessions-tbody">
+                    <tr><td colspan="7" class="table-empty">No sessions found.</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Replay Controller & Step Visualizer -->
+    <div class="card split-right-card" id="session-replay-panel">
+        <div class="inspector-placeholder" id="replay-placeholder">
+            <div class="placeholder-icon">⇄</div>
+            <h4>Interactive Session Replay</h4>
+            <p>Select any session row on the left to initialize historical replay controls. Visualize the complete network propagation pipeline step-by-step.</p>
+        </div>
+
+        <div class="inspector-content hidden" id="replay-content">
+            <div class="inspector-header">
+                <span class="badge badge-green" id="replay-lbl-session">SESSION ACTIVE</span>
+                <h3>Playback Controller</h3>
+            </div>
+
+            <!-- Replay Playback Buttons -->
+            <div class="replay-controls-row">
+                <button class="btn btn-small" id="btn-replay-prev">◀ Step</button>
+                <button class="btn btn-small btn-cyan" id="btn-replay-play">Play</button>
+                <button class="btn btn-small btn-amber" id="btn-replay-pause">Pause</button>
+                <button class="btn btn-small" id="btn-replay-next">Step ▶</button>
+                
+                <select id="replay-speed" class="filter-select select-small">
+                    <option value="1500">1.0x Speed</option>
+                    <option value="800">2.0x Speed</option>
+                    <option value="300">5.0x Speed</option>
+                </select>
+            </div>
+
+            <div class="replay-progress-line">
+                <span>Packet <strong id="replay-current-step">0</strong> / <strong id="replay-total-steps">0</strong></span>
+                <div class="progress-bar-bg"><div class="progress-bar-fill" id="replay-progress-bar" style="width: 0%;"></div></div>
+            </div>
+
+            <!-- Replay Pipeline Diagram -->
+            <div class="pipeline-section">
+                <h4>Pipeline Visualizer</h4>
+                
+                <div class="pipeline-nodes">
+                    <div class="node" id="node-generated">
+                        <div class="node-icon">◈</div>
+                        <div class="node-lbl">1. Build Packet</div>
+                    </div>
+                    <div class="node-arrow">→</div>
+                    
+                    <div class="node" id="node-encrypted">
+                        <div class="node-icon">🔒</div>
+                        <div class="node-lbl">2. Encrypt GCM</div>
+                    </div>
+                    <div class="node-arrow">→</div>
+
+                    <div class="node" id="node-transmitted">
+                        <div class="node-icon">▲</div>
+                        <div class="node-lbl">3. UDP Transmit</div>
+                    </div>
+                    <div class="node-arrow">→</div>
+
+                    <div class="node" id="node-received">
+                        <div class="node-icon">▼</div>
+                        <div class="node-lbl">4. UDP Listen</div>
+                    </div>
+                    <div class="node-arrow">→</div>
+
+                    <div class="node" id="node-threat">
+                        <div class="node-icon">⚠</div>
+                        <div class="node-lbl">5. Threat Scan</div>
+                    </div>
+                    <div class="node-arrow">→</div>
+
+                    <div class="node" id="node-decrypted">
+                        <div class="node-icon">🔓</div>
+                        <div class="node-lbl">6. Decrypt Message</div>
+                    </div>
+                </div>
+
+                <div class="pipeline-details-box" id="replay-step-details">
+                    <!-- Details of active packet step -->
+                    <h5>Select a packet to start playback.</h5>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<!-- System Logs & Export Center Page                               -->
+<!-- ═══════════════════════════════════════════════════════════════ -->
+<div id="page-logs" class="page-view">
+<div class="page-header-row">
+    <h2>System Administration & Security Auditing</h2>
+    <button class="btn btn-cyan" id="logs-refresh-btn">Refresh</button>
+</div>
+
+<div class="split-layout">
+    <!-- Left: Error logs -->
+    <div class="card split-left-card">
+        <div class="card-header">
+            <h3>Registered Errors & Failure Logs</h3>
+        </div>
+        <div class="table-wrapper">
+            <table class="data-table" id="errors-table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Type</th>
+                        <th>Module</th>
+                        <th>Message</th>
+                        <th>Timestamp</th>
+                    </tr>
+                </thead>
+                <tbody id="errors-tbody">
+                    <tr><td colspan="5" class="table-empty">No errors logged.</td></tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Right: Export Center Widget -->
+    <div class="card split-right-card">
+        <div class="card-header">
+            <h3>Data Export Center</h3>
+        </div>
+        <div class="export-widget-body">
+            <p>Generate cryptographic audit reports and download activity logs from the platform database.</p>
+            
+            <form id="export-form" class="form-layout" style="margin-top: 15px;">
+                <div class="form-group-col">
+                    <label for="export-domain">Data Category</label>
+                    <select id="export-domain" class="filter-select filter-select-full">
+                        <option value="packets">Network Packet Logs</option>
+                        <option value="threats">Threat Detection Reports</option>
+                        <option value="sessions">Session Communication Records</option>
+                        <option value="analytics">Performance Metrics History</option>
+                        <option value="config">Runtime Settings Configuration</option>
+                    </select>
+                </div>
+                
+                <div class="form-group-col" style="margin-top: 10px;">
+                    <label for="export-format">Target Format</label>
+                    <select id="export-format" class="filter-select filter-select-full">
+                        <option value="json">JSON File (.json)</option>
+                        <option value="csv">CSV Spreadsheets (.csv)</option>
+                        <option value="pdf">Structured PDF Document (.pdf)</option>
+                    </select>
+                </div>
+                
+                <button type="submit" class="btn btn-cyan btn-full" id="export-btn" style="margin-top: 20px;">Generate Export File</button>
+            </form>
+        </div>
+    </div>
+</div>
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // Initialize boot time
+        const times = document.querySelectorAll('#boot-time');
+        times.forEach(el => {
+            el.textContent = new Date().toLocaleTimeString('en-GB', {hour12: false});
+        });
+
+        // Clear Console functionality
+        const clearBtn = document.getElementById('clear-console-btn');
+        const console = document.getElementById('activity-console');
+        if (clearBtn && console) {
+            clearBtn.addEventListener('click', () => {
+                console.innerHTML = '<div class="console-line"><span class="console-time">' + 
+                    new Date().toLocaleTimeString('en-GB', {hour12: false}) + 
+                    '</span><span class="console-tag info">INFO</span><span class="console-msg">Console cleared.</span></div>';
+            });
+        }
+    });
+</script>
+{% endblock %}
+```

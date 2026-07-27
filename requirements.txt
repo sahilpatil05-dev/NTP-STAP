@@ -1,0 +1,23 @@
+# NTP-SCTAP Dependencies
+# Generated: 2026-06-28
+# Python 3.10+
+
+# ── Web Framework ────────────────────────────────────────────────
+Flask==3.1.1
+Flask-SocketIO==5.5.1
+
+# ── SocketIO Transport ──────────────────────────────────────────
+python-socketio==5.11.0
+python-engineio==4.9.0
+
+# ── Production WSGI/ASGI Server (for Render deployment) ──────────
+# ✅ BUG-026 FIX: Production server for Flask-SocketIO
+gunicorn==23.0.0
+eventlet==0.36.0
+
+# ── Cryptography (used from Milestone 2) ────────────────────────
+cryptography==42.0.8
+
+# ── Testing ─────────────────────────────────────────────────────
+pytest==8.3.2
+pytest-cov==5.0.0

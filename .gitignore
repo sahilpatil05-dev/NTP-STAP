@@ -1,0 +1,57 @@
+# ── Python ───────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyo
+*.egg-info/
+dist/
+build/
+*.egg
+
+# ── Virtual Environments ─────────────────────────────────────────
+venv/
+.venv/
+env/
+ENV/
+
+# ── IDE / Editor ─────────────────────────────────────────────────
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# ── OS ───────────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# ── Application Data ────────────────────────────────────────────
+data/
+logs/
+*.db
+*.db-journal
+*.db-wal
+*.db-shm
+
+# ── Environment ──────────────────────────────────────────────────
+.env
+.env.local
+
+# ── Testing ──────────────────────────────────────────────────────
+.pytest_cache/
+htmlcov/
+.coverage
+.coverage.*
+coverage.xml
+
+# ── Type Checking & Linting Caches ──────────────────────────────
+# ✅ RECOMMENDATION 2: Ignore type checker and linter caches
+.mypy_cache/
+.ruff_cache/
+.cache/
+
+# ── Runtime Generated Data ──────────────────────────────────────
+# ✅ RECOMMENDATION 3: Ignore user uploads and exports
+uploads/
+exports/
