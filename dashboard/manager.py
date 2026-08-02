@@ -53,7 +53,7 @@ class DashboardStateManager:
         self.client_lock = threading.Lock()
         
         # Crypto and receiver state
-        self.current_password: str = "strong-password"  # default placeholder
+        self.current_password: str = "admin@123"  # default placeholder
         self.receiver_manager: Optional[ReceiverManager] = None
         self.receiver_lock = threading.Lock()
         
@@ -422,7 +422,7 @@ def get_dashboard_manager() -> DashboardStateManager:
 def reset_dashboard_manager() -> None:
     """Reset the singleton instance (primarily for tests)."""
     global _dashboard_manager
-    with _manager_lock:
+    with _manager_lock: 
         if _dashboard_manager is not None:
             _dashboard_manager.stop_monitoring()
             _dashboard_manager.stop_receiver()
