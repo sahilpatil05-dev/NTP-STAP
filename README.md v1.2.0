@@ -1,0 +1,155 @@
+NTP-SCTAP is a distributed cybersecurity research platform that demonstrates secure covert communication over the Network Time Protocol (NTP), real-time packet inspection, AES-256-GCM encryption, protocol analysis, and defensive threat detection across multiple hosts.
+Distributed Communication
+Windows ↔ Linux secure communication
+Cross-platform packet transmission
+Remote sender client
+Real network deployment
+Bridged network support
+Automatic receiver service
+✅ Wireshark Verification
+
+Add an entire section:
+
+## Wireshark Verification
+
+The project has been successfully validated using Wireshark.
+
+Verified components:
+
+✔ UDP packet transmission
+✔ Windows → Kali communication
+✔ AES-256 encrypted payload
+✔ Custom NTP Extension Field
+✔ Cross-machine packet capture
+✔ Packet integrity
+✔ Live network analysis
+
+✅ Architecture
+                Windows
+        ┌─────────────────────┐
+        │ sender_client.py    │
+        │                     │
+        │ Crypto Engine       │
+        │ Sender Manager      │
+        └─────────┬───────────┘
+                  │
+           AES-256 Encryption
+                  │
+         Custom NTP Extension
+                  │
+             UDP Transmission
+════════════════════════════════════════════
+                Local Network
+════════════════════════════════════════════
+                  │
+             Kali Linux
+        ┌─────────────────────┐
+        │ UDP Receiver        │
+        │ Packet Parser       │
+        │ Threat Detector     │
+        │ Analytics Engine    │
+        │ SQLite Database     │
+        │ Flask Dashboard     │
+        └─────────────────────┘
+
+
+
+✅ Project Structure
+sender_client.py
+
+✅ Current Capabilities
+✔ Windows ↔ Linux Communication
+
+✔ Cross-machine encrypted messaging
+
+✔ Wireshark verified packet transmission
+
+✔ AES-256-GCM authenticated encryption
+
+✔ Remote sender client
+
+✔ Real UDP communication
+
+✔ Distributed deployment
+
+✔ Live threat monitoring
+
+✔ Packet forensic analysis
+
+✅ Technology Stack
+Wireshark
+tcpdump
+VirtualBox
+Kali Linux
+Windows 11
+
+✅ Installation
+Distributed Deployment
+Kali Linux
+python run.py
+Windows
+python sender_client.py
+
+✅ Demonstration Workflow
+User enters secret message
+            │
+            ▼
+AES-256-GCM Encryption
+            │
+            ▼
+Custom NTP Packet Created
+            │
+            ▼
+UDP Transmission
+            │
+            ▼
+Local Network
+            │
+            ▼
+Linux Receiver
+            │
+            ▼
+Threat Detection
+            │
+            ▼
+Message Recovery
+            │
+            ▼
+Dashboard Visualization
+            │
+            ▼
+Analytics & Database Storage
+
+✅Project Statistics
+
+Python Modules : 15+
+
+REST APIs : 20+
+
+Database Tables : 9
+
+Tests : 145+
+
+WebSocket Events : 6+
+
+Supported Platforms :
+
+Windows
+
+Linux
+
+UDP Communication
+
+AES-256-GCM Encryption
+
+Real-Time Dashboard
+
+Current Status
+Phase 1
+██████████ 100%
+
+Phase 2
+██████████ 100%
+
+Phase 3
+████░░░░░░ 40%
